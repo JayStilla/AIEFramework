@@ -1,11 +1,38 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AIEFramework", "AIEFramework\AIEFramework_vs2013.vcxproj", "{BBD02D30-A9A5-41ED-9C12-67EC17B5C08B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5D056CED-A513-41EE-A0DD-6ECFE546F6B0} = {5D056CED-A513-41EE-A0DD-6ECFE546F6B0}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FBXLoader", "..\tools\FBXLoader\FBXLoader_vs2013.vcxproj", "{5D056CED-A513-41EE-A0DD-6ECFE546F6B0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tutorial1", "Tutorial1\Tutorial1.vcxproj", "{CB20AE24-7F84-420D-8F6C-57C4727A0862}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BBD02D30-A9A5-41ED-9C12-67EC17B5C08B} = {BBD02D30-A9A5-41ED-9C12-67EC17B5C08B}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tutorial_2", "..\..\..\Visual Studio 2013\Projects\Tutorial_2\Tutorial_2\Tutorial_2.vcxproj", "{F1386B63-0A9B-4516-8445-20826442B5C9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FBX_Tutorial", "FBX_Tutorial\FBX_Tutorial.vcxproj", "{B8058BE7-0189-4E9D-9435-A6705E50A8B4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BBD02D30-A9A5-41ED-9C12-67EC17B5C08B} = {BBD02D30-A9A5-41ED-9C12-67EC17B5C08B}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextureTutorial", "TextureTutorial\TextureTutorial.vcxproj", "{7957FEA6-AF06-4307-95BE-C3B54FE02EDF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParticleTutorial", "ParticleTutorial\ParticleTutorial.vcxproj", "{F64FAFF1-810D-4937-BF06-4435BB147A23}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LightingTut", "LightingTut\LightingTut.vcxproj", "{F0D955BE-A296-4D37-8F50-60EAB29CDF33}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GPUParticleSystem", "GPUParticleSystem\GPUParticleSystem.vcxproj", "{4D51317A-EBE2-486B-B5C6-3F343CBD6A58}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultipleTexturesTut", "MultipleTexturesTut\MultipleTexturesTut.vcxproj", "{81BA2940-CED9-40C7-B91E-6F3113DFE106}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultipleTextures_Tutorial", "MultipleTextures_Tutorial\MultipleTextures_Tutorial.vcxproj", "{D2278DFC-4E71-4C38-A6DC-344275051B16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +48,42 @@ Global
 		{5D056CED-A513-41EE-A0DD-6ECFE546F6B0}.Debug|Win32.Build.0 = Debug|Win32
 		{5D056CED-A513-41EE-A0DD-6ECFE546F6B0}.Release|Win32.ActiveCfg = Release|Win32
 		{5D056CED-A513-41EE-A0DD-6ECFE546F6B0}.Release|Win32.Build.0 = Release|Win32
+		{CB20AE24-7F84-420D-8F6C-57C4727A0862}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CB20AE24-7F84-420D-8F6C-57C4727A0862}.Debug|Win32.Build.0 = Debug|Win32
+		{CB20AE24-7F84-420D-8F6C-57C4727A0862}.Release|Win32.ActiveCfg = Release|Win32
+		{CB20AE24-7F84-420D-8F6C-57C4727A0862}.Release|Win32.Build.0 = Release|Win32
+		{F1386B63-0A9B-4516-8445-20826442B5C9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F1386B63-0A9B-4516-8445-20826442B5C9}.Debug|Win32.Build.0 = Debug|Win32
+		{F1386B63-0A9B-4516-8445-20826442B5C9}.Release|Win32.ActiveCfg = Release|Win32
+		{F1386B63-0A9B-4516-8445-20826442B5C9}.Release|Win32.Build.0 = Release|Win32
+		{B8058BE7-0189-4E9D-9435-A6705E50A8B4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B8058BE7-0189-4E9D-9435-A6705E50A8B4}.Debug|Win32.Build.0 = Debug|Win32
+		{B8058BE7-0189-4E9D-9435-A6705E50A8B4}.Release|Win32.ActiveCfg = Release|Win32
+		{B8058BE7-0189-4E9D-9435-A6705E50A8B4}.Release|Win32.Build.0 = Release|Win32
+		{7957FEA6-AF06-4307-95BE-C3B54FE02EDF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7957FEA6-AF06-4307-95BE-C3B54FE02EDF}.Debug|Win32.Build.0 = Debug|Win32
+		{7957FEA6-AF06-4307-95BE-C3B54FE02EDF}.Release|Win32.ActiveCfg = Release|Win32
+		{7957FEA6-AF06-4307-95BE-C3B54FE02EDF}.Release|Win32.Build.0 = Release|Win32
+		{F64FAFF1-810D-4937-BF06-4435BB147A23}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F64FAFF1-810D-4937-BF06-4435BB147A23}.Debug|Win32.Build.0 = Debug|Win32
+		{F64FAFF1-810D-4937-BF06-4435BB147A23}.Release|Win32.ActiveCfg = Release|Win32
+		{F64FAFF1-810D-4937-BF06-4435BB147A23}.Release|Win32.Build.0 = Release|Win32
+		{F0D955BE-A296-4D37-8F50-60EAB29CDF33}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F0D955BE-A296-4D37-8F50-60EAB29CDF33}.Debug|Win32.Build.0 = Debug|Win32
+		{F0D955BE-A296-4D37-8F50-60EAB29CDF33}.Release|Win32.ActiveCfg = Release|Win32
+		{F0D955BE-A296-4D37-8F50-60EAB29CDF33}.Release|Win32.Build.0 = Release|Win32
+		{4D51317A-EBE2-486B-B5C6-3F343CBD6A58}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4D51317A-EBE2-486B-B5C6-3F343CBD6A58}.Debug|Win32.Build.0 = Debug|Win32
+		{4D51317A-EBE2-486B-B5C6-3F343CBD6A58}.Release|Win32.ActiveCfg = Release|Win32
+		{4D51317A-EBE2-486B-B5C6-3F343CBD6A58}.Release|Win32.Build.0 = Release|Win32
+		{81BA2940-CED9-40C7-B91E-6F3113DFE106}.Debug|Win32.ActiveCfg = Debug|Win32
+		{81BA2940-CED9-40C7-B91E-6F3113DFE106}.Debug|Win32.Build.0 = Debug|Win32
+		{81BA2940-CED9-40C7-B91E-6F3113DFE106}.Release|Win32.ActiveCfg = Release|Win32
+		{81BA2940-CED9-40C7-B91E-6F3113DFE106}.Release|Win32.Build.0 = Release|Win32
+		{D2278DFC-4E71-4C38-A6DC-344275051B16}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D2278DFC-4E71-4C38-A6DC-344275051B16}.Debug|Win32.Build.0 = Debug|Win32
+		{D2278DFC-4E71-4C38-A6DC-344275051B16}.Release|Win32.ActiveCfg = Release|Win32
+		{D2278DFC-4E71-4C38-A6DC-344275051B16}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
