@@ -36,7 +36,31 @@ bool MultipleTexturesTut::onCreate(int a_argc, char* a_argv[])
 	// set the clear colour and enable depth testing and backface culling
 	glClearColor(0.25f,0.25f,0.25f,1);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
+
+	//custom coding
+	// load the shader
+	const char* aszInputs[] = { "Position", "Color", "TexCoord1" };
+	const char* aszOutputs[] = { "outColour" };
+
+	// load shader internally calls glCreateShader...
+	GLuint vshader = Utility::loadShader("./shaders/MultipleTut.vert", GL_VERTEX_SHADER);
+	GLuint pshader = Utility::loadShader("./shaders/MultipleTut.frag", GL_FRAGMENT_SHADER);
+
+	m_shader = Utility::createProgram(vshader, 0, 0, 0, pshader, 3, aszInputs, 1, aszOutputs);
+
+	// free our shader once we built our program
+	glDeleteShader(vshader);
+	glDeleteShader(pshader);
+
+	m_fbx = new FBXFile();
+	m_fbx->load("./Models/soulspear/soulspear.fbx", FBXFile::UNITS_CENTIMETER);
+	m_fbx->initialiseOpenGLTextures();
+	InitFBXSceneResource(m_fbx);
+
+	LoadTexture("./textures/decay.png");
+
+	m_decayValue = 0;
 
 	return true;
 }
@@ -65,6 +89,14 @@ void MultipleTexturesTut::onUpdate(float a_deltaTime)
 	// quit our application when escape is pressed
 	if (glfwGetKey(m_window,GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		quit();
+
+	UpdateFBXSceneResource(m_fbx); 
+
+	if (glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS) m_decayValue -= a_deltaTime;
+	if (glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS) m_decayValue += a_deltaTime;
+
+	if (m_decayValue < 0.0f) m_decayValue = 0.0f;
+	if (m_decayValue > 1.0f) m_decayValue = 1.0f;
 }
 
 void MultipleTexturesTut::onDraw() 
@@ -82,12 +114,18 @@ void MultipleTexturesTut::onDraw()
 	int width = 0, height = 0;
 	glfwGetWindowSize(m_window, &width, &height);
 	Gizmos::draw2D(glm::ortho<float>(0, width, 0, height, -1.0f, 1.0f));
+	RenderFBXSceneResource(m_fbx, viewMatrix, m_projectionMatrix); 
 }
 
 void MultipleTexturesTut::onDestroy()
 {
 	// clean up anything we created
 	Gizmos::destroy();
+	glDeleteShader(m_shader); 
+	DestroyFBXSceneResource(m_fbx); 
+	m_fbx->unload(); 
+	delete m_fbx; 
+	m_fbx = NULL; 
 }
 
 // main that controls the creation/destruction of an application
@@ -162,6 +200,10 @@ void MultipleTexturesTut::InitFBXSceneResource(FBXFile *a_pScene)
 
 void MultipleTexturesTut::RenderFBXSceneResource(FBXFile *a_pScene, glm::mat4 a_view, glm::mat4 a_projection)
 {
+	//enable transparent blending 
+	glEnable(GL_BLEND); 
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// activate a shader
 	glUseProgram(m_shader);
 
@@ -172,6 +214,9 @@ void MultipleTexturesTut::RenderFBXSceneResource(FBXFile *a_pScene, glm::mat4 a_
 	GLint uModel = glGetUniformLocation(m_shader, "Model");
 	GLint uView = glGetUniformLocation(m_shader, "View");
 	GLint uProjection = glGetUniformLocation(m_shader, "Projection");
+
+	GLint uDecayTexture = glGetUniformLocation(m_shader, "DecayTexture");
+	GLint uDecayValue = glGetUniformLocation(m_shader, "DecayValue"); 
 
 	// for each mesh in the model...
 	for (int i = 0; i<a_pScene->getMeshCount(); ++i)
@@ -187,12 +232,17 @@ void MultipleTexturesTut::RenderFBXSceneResource(FBXFile *a_pScene, glm::mat4 a_
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, mesh->m_material->textures[FBXMaterial::DiffuseTexture]->handle);
 
+		glActiveTexture(GL_TEXTURE2); 
+		glBindTexture(GL_TEXTURE_2D, m_decayTexture);
 
 		// reset back to the default active texture
 		glActiveTexture(GL_TEXTURE0);
 
 		// tell the shader which texture to use
 		glUniform1i(uDiffuseTexture, 1);
+		glUniform1i(uDecayTexture, 2); 
+
+		glUniform1f(uDecayValue, m_decayValue); 
 
 		// send the Model, View and Projection Matrices to the shader
 		glUniformMatrix4fv(uModel, 1, false, glm::value_ptr(mesh->m_globalTransform));
@@ -207,6 +257,8 @@ void MultipleTexturesTut::RenderFBXSceneResource(FBXFile *a_pScene, glm::mat4 a_
 		glDrawElements(GL_TRIANGLES, mesh->m_indices.size(), GL_UNSIGNED_INT, 0);
 
 	}
+	//reset back to the default active texture
+	glActiveTexture(GL_TEXTURE0); 
 
 	// finally, we have finished rendering the meshes
 	// disable this shader
@@ -256,4 +308,35 @@ void MultipleTexturesTut::DestroyFBXSceneResource(FBXFile *a_pScene)
 			//glDeleteTextures(1, &pMaterial->textureIDs[j]);
 		}
 	}
+
 }
+
+void MultipleTexturesTut::LoadTexture(char * filePath)
+{
+	//  load image data
+	int width = 0;
+	int height = 0;
+	int format = 0;
+	unsigned char* pixelData = stbi_load(filePath,
+		&width, &height, &format, STBI_default);
+
+	printf("Width: %i Height: %i Format: %i\n", width, height, format);
+
+	// create OpenGL texture handle
+	glGenTextures(1, &m_texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+
+	// set pixel data for texture
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+
+	// set filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	// clear bound texture state so we don't accidentally change it
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// delete pixel data here instead!
+	delete[] pixelData;
+}
+

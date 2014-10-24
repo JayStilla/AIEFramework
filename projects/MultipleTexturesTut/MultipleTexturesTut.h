@@ -2,7 +2,10 @@
 
 #include "Application.h"
 #include <FBXFile.h>
+#include <stb_image.h>
 #include <glm/glm.hpp>
+#include <GL/glew.h>
+#include <Utilities.h>
 
 // derived application class that wraps up all globals neatly
 class MultipleTexturesTut : public Application
@@ -26,7 +29,7 @@ protected:
 
 	void LoadTexture(char * filePath);
 
-	void CreateShaders(); 
+
 
 	glm::mat4	m_cameraMatrix;
 	glm::mat4	m_projectionMatrix;
@@ -42,10 +45,11 @@ protected:
 
 	FBXFile *m_fbx;
 
-	GLuint m_texture; 
+	GLuint m_texture;
 	GLuint m_texture2; 
 
 	float m_decayValue; 
+	float m_decayTexture;
 
 	BasicVertex Swag; 
 

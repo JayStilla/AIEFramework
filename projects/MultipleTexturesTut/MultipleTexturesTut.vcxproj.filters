@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{19c219b1-5ba1-4d8f-85e0-e7727cfed3ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MultipleTexturesTut.cpp">
@@ -23,5 +26,19 @@
     <ClInclude Include="MultipleTexturesTut.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\MultipleTut.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\MultipleTut.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\SimpleFBX_Tutorial.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\SimpleFBX_Tutorial.vert">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
